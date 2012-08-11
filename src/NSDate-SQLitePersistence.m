@@ -36,7 +36,7 @@
 #else
   static NSDateFormatter *dateFormatter = nil;
   if (!dateFormatter) {
-    dateFormatter = [[[NSDateFormatter alloc] init] retain];
+    dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSS"];
   }
   return [dateFormatter dateFromString:columnData];
@@ -54,7 +54,7 @@
 #else
   static NSDateFormatter *dateFormatter = nil;
   if (!dateFormatter) {
-    dateFormatter = [[[NSDateFormatter alloc] init] retain];
+    dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSS"];
   }
   

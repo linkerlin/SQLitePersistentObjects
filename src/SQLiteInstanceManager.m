@@ -89,7 +89,7 @@ static SQLiteInstanceManager *sharedSQLiteManager = nil;
 }
 - (void)setCacheSize:(NSUInteger)pages
 {
-  NSString *updateSQL = [NSString stringWithFormat:@"PRAGMA cache_size=%d", pages];
+  NSString *updateSQL = [NSString stringWithFormat:@"PRAGMA cache_size=%ld", pages];
   [self executeUpdateSQL:updateSQL];
 }
 - (void)setLockingMode:(SQLITE3LockingMode)mode
@@ -120,12 +120,6 @@ static SQLiteInstanceManager *sharedSQLiteManager = nil;
   }
 }
 #pragma mark -
-- (void)dealloc
-{
-  [databaseFilepath release];
-  [databaseName release];
-  [super dealloc];
-}
 #pragma mark -
 #pragma mark Private Methods
 
@@ -137,8 +131,8 @@ static SQLiteInstanceManager *sharedSQLiteManager = nil;
     databaseFilepath = [[@"./" stringByAppendingPathComponent:self.databaseName] retain];
 #elif (TARGET_OS_MAC && ! TARGET_OS_IPHONE)
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *base = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    databaseFilepath = [[base stringByAppendingPathComponent:self.databaseName] retain];
+    NSString *base = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
+    databaseFilepath = [base stringByAppendingPathComponent:self.databaseName];
 #else
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     databaseFilepath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:self.databaseName] retain];
@@ -160,7 +154,7 @@ static SQLiteInstanceManager *sharedSQLiteManager = nil;
       if (![oneChar isEqualToString:@" "]) 
         [ret appendString:[oneChar lowercaseString]];
     }
-    databaseName = [[ret stringByAppendingString:@".sqlite3"] retain];
+    databaseName = [ret stringByAppendingString:@".sqlite3"];
   }
   return databaseName;
 }

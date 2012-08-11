@@ -73,12 +73,11 @@
     NSString *ret;
     numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setCurrencyCode:[[NSLocale currentLocale] objectForKey:NSLocaleCurrencyCode]];
+    [numberFormatter setCurrencyCode:[NSLocale currentLocale][NSLocaleCurrencyCode]];
 //    [numberFormatter setNegativePrefix:[[NSLocale currentLocale] negativePrefix]];
     
   
-    ret = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:inValue]];
-    [numberFormatter release];
+    ret = [numberFormatter stringFromNumber:@(inValue)];
     return ret;
 
 }

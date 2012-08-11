@@ -28,11 +28,11 @@
   long long longValue = [columnData longLongValue];
   
   if (doubleValue == longValue)
-    ret = [[NSNumber alloc] initWithLongLong:longValue];
+    ret = @(longValue);
   else
-    ret = [[NSNumber alloc] initWithDouble:doubleValue];
+    ret = @(doubleValue);
   
-  return [ret autorelease];
+  return ret;
 }
 - (NSString *)sqlColumnRepresentationOfSelf
 {
